@@ -36,7 +36,19 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    proxy: {
+      ['/dev-api/vue-admin-template']: {
+        target: 'http://192.168.2.38:28001/',
+        changeOrigin: true, // 开启代理服务器，
+        pathRewrite: {
+          ["^/dev-api"]: "",
+        },
+      }
+    }
+    // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
